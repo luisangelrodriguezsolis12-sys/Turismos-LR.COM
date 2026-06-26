@@ -1048,6 +1048,111 @@ footer{
 .map-hint i{color:var(--gold);animation:pdot 2s ease-in-out infinite;}
 .fleet-card,.dc{transform-style:preserve-3d;will-change:transform;}
 @media(max-width:768px){ .map-hint{font-size:.58rem;} }
+ 
+/* ════════════════════════════════════════
+   TICKET VIP 3D (confirmación)
+════════════════════════════════════════ */
+.tk-overlay{
+  display:none;position:fixed;inset:0;z-index:900;
+  background:radial-gradient(ellipse at center,rgba(10,12,16,.86),rgba(0,0,0,.94));
+  backdrop-filter:blur(12px);
+  align-items:center;justify-content:center;padding:18px;overflow-y:auto;
+  perspective:1400px;
+}
+.tk-overlay.active{display:flex;}
+.tk-confetti{position:absolute;inset:0;pointer-events:none;z-index:2;}
+.ticket{
+  position:relative;z-index:3;max-width:430px;width:100%;margin:auto;
+  background:linear-gradient(160deg,#161b27 0%,#10131c 60%,#161b27 100%);
+  border:1px solid rgba(201,146,43,.35);
+  border-radius:26px;padding:34px 30px 30px;
+  box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03) inset,
+             0 0 60px rgba(201,146,43,.12);
+  transform-style:preserve-3d;
+  animation:tkIn .7s cubic-bezier(.16,1,.3,1);
+  transition:transform .15s ease-out;
+}
+@keyframes tkIn{
+  0%{opacity:0;transform:rotateX(-38deg) translateY(60px) scale(.85);}
+  100%{opacity:1;transform:rotateX(0) translateY(0) scale(1);}
+}
+/* sheen dorado */
+.ticket::before{
+  content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;
+  background:linear-gradient(115deg,transparent 30%,rgba(245,204,122,.16) 48%,transparent 66%);
+  background-size:250% 100%;background-position:200% 0;
+  animation:tkSheen 3.4s ease-in-out infinite;
+}
+@keyframes tkSheen{0%{background-position:200% 0;}60%,100%{background-position:-60% 0;}}
+.ticket::after{
+  content:'';position:absolute;inset:-1px;border-radius:27px;pointer-events:none;
+  background:linear-gradient(135deg,rgba(201,146,43,.5),transparent 40%,transparent 60%,rgba(0,196,170,.35));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:1px;opacity:.6;
+}
+.tk-close{
+  position:absolute;top:14px;right:14px;z-index:6;
+  width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.08);color:#fff;font-size:.95rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,transform .25s;
+}
+.tk-close:hover{background:rgba(255,255,255,.18);transform:rotate(90deg);}
+.tk-icon{
+  width:66px;height:66px;margin:0 auto 16px;border-radius:50%;
+  background:rgba(0,196,170,.12);border:1px solid rgba(0,196,170,.4);
+  color:var(--cyan);font-size:1.7rem;
+  display:flex;align-items:center;justify-content:center;position:relative;z-index:4;
+  box-shadow:0 0 0 0 rgba(0,196,170,.4);animation:tkPulse 2.4s infinite;
+}
+@keyframes tkPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,196,170,.4);}50%{box-shadow:0 0 0 14px rgba(0,196,170,0);}}
+.tk-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.55rem;color:#fff;text-align:center;letter-spacing:-.5px;position:relative;z-index:4;}
+.tk-sub{color:rgba(255,255,255,.45);font-size:.84rem;text-align:center;margin-top:6px;line-height:1.5;position:relative;z-index:4;}
+.tk-body{
+  position:relative;z-index:4;margin-top:24px;
+  background:rgba(7,9,14,.6);border:1px dashed rgba(201,146,43,.3);
+  border-radius:16px;padding:20px 22px;
+}
+/* muescas tipo boleto */
+.tk-body::before,.tk-body::after{
+  content:'';position:absolute;top:50%;width:22px;height:22px;border-radius:50%;
+  background:#10131c;transform:translateY(-50%);
+}
+.tk-body::before{left:-12px;box-shadow:1px 0 0 rgba(201,146,43,.3) inset;}
+.tk-body::after{right:-12px;box-shadow:-1px 0 0 rgba(201,146,43,.3) inset;}
+.tk-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.tk-row:last-child{border-bottom:none;}
+.tk-k{font-size:.64rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);font-weight:700;white-space:nowrap;}
+.tk-v{font-family:'Inter',sans-serif;font-size:.86rem;color:#fff;font-weight:500;text-align:right;}
+.tk-folio{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:14px;padding-top:14px;border-top:1px dashed rgba(201,146,43,.25);
+}
+.tk-folio span{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.tk-folio strong{font-family:'Syne',sans-serif;color:var(--gold-l);font-size:.95rem;letter-spacing:1px;}
+.tk-wa{
+  position:relative;z-index:4;width:100%;margin-top:22px;
+  display:inline-flex;align-items:center;justify-content:center;gap:11px;
+  background:linear-gradient(100deg,#1faf6b,#0e9488);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;letter-spacing:.5px;
+  padding:16px;border-radius:14px;text-decoration:none;overflow:hidden;
+  box-shadow:0 12px 30px rgba(16,148,136,.35);
+  transition:transform .25s,box-shadow .25s,filter .25s;
+}
+.tk-wa::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.32) 50%,transparent 75%);
+  transform:translateX(-100%);transition:transform .6s;
+}
+.tk-wa:hover::before{transform:translateX(100%);}
+.tk-wa:hover{transform:translateY(-3px);filter:brightness(1.08);box-shadow:0 18px 40px rgba(16,148,136,.5);}
+.tk-wa svg{width:22px;height:22px;fill:currentColor;}
+.tk-note{position:relative;z-index:4;color:rgba(255,255,255,.32);font-size:.7rem;text-align:center;margin-top:14px;line-height:1.5;}
+@media(max-width:480px){
+  .ticket{padding:28px 22px 24px;border-radius:22px;}
+  .tk-title{font-size:1.3rem;}
+  .tk-v{font-size:.8rem;}
+}
 </style>
 </head>
 <body>
@@ -1299,12 +1404,12 @@ footer{
         <form id="fCot">
           <div class="fg">
             <label>Nombre completo</label>
-            <input type="text" id="fnombre" placeholder="Ej. Juan Pérez" required>
+            <input type="text" id="fnombre" name="cliente" placeholder="Ej. Juan Pérez" required>
           </div>
           <div class="fg">
             <label>Punto de salida (origen)</label>
             <div class="gps-row">
-              <input type="text" id="fsalida" placeholder="Ej. Av. Vallarta 1234, Guadalajara" required>
+              <input type="text" id="fsalida" name="origen" placeholder="Ej. Av. Vallarta 1234, Guadalajara" required>
               <button type="button" class="btn-gps" id="gpsBtn"><i class="fas fa-location-crosshairs"></i> GPS</button>
             </div>
             <div class="gps-note" id="gpsNote"><i class="fas fa-circle-info"></i> Toca <strong>GPS</strong> para compartir tu ubicación exacta de recolección. Llegará a WhatsApp con un enlace al mapa.</div>
@@ -1312,7 +1417,7 @@ footer{
           <div class="fg-row">
             <div class="fg">
               <label>Destino (llegada)</label>
-              <select id="fdestino" required>
+              <select id="fdestino" name="destino" required>
                 <option disabled selected value="">Seleccionar...</option>
                 <option>Mazamitla</option>
                 <option>Tapalpa</option>
@@ -1325,7 +1430,7 @@ footer{
             </div>
             <div class="fg">
               <label>Vehículo</label>
-              <select id="funidad" required>
+              <select id="funidad" name="vehiculo" required>
                 <option disabled selected value="">Seleccionar...</option>
                 <option value="Nissan Urvan (15 pasajeros)">Urvan — 15 pax</option>
                 <option value="Mercedes-Benz Sprinter (20 pasajeros)">Sprinter — 20 pax</option>
@@ -1334,39 +1439,40 @@ footer{
           </div>
           <div class="fg" id="fgOtroDestino" style="display:none;">
             <label>¿Qué lugar te gustaría conocer?</label>
-            <input type="text" id="fotrodestino" placeholder="Ej. Sayulita, Pátzcuaro, San Miguel de Allende, Guanajuato...">
+            <input type="text" id="fotrodestino" name="destino_otro" placeholder="Ej. Sayulita, Pátzcuaro, San Miguel de Allende, Guanajuato...">
           </div>
           <div class="fg-row">
             <div class="fg">
               <label>Fecha de salida</label>
-              <input type="date" id="ffecha" required>
+              <input type="date" id="ffecha" name="fecha" required>
             </div>
             <div class="fg">
               <label>Hora de salida</label>
-              <input type="time" id="fhora" required>
+              <input type="time" id="fhora" name="hora" required>
             </div>
           </div>
           <div class="fg-row">
             <div class="fg">
               <label>Fecha de regreso / llegada</label>
-              <input type="date" id="fregreso">
+              <input type="date" id="fregreso" name="regreso">
             </div>
             <div class="fg">
               <label>Hora de regreso</label>
-              <input type="time" id="fhoraregreso">
+              <input type="time" id="fhoraregreso" name="hora_regreso">
             </div>
           </div>
           <div class="fg-row">
             <div class="fg">
               <label>N° de pasajeros</label>
-              <input type="number" id="fpax" placeholder="Ej. 12" min="1" required>
+              <input type="number" id="fpax" name="pasajeros" placeholder="Ej. 12" min="1" required>
             </div>
             <div class="fg">
               <label>Días de servicio</label>
-              <input type="number" id="fdias" placeholder="Ej. 3" min="1" required>
+              <input type="number" id="fdias" name="dias" placeholder="Ej. 3" min="1" required>
             </div>
           </div>
-          <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> Enviar solicitud por WhatsApp</button>
+          <input type="hidden" id="lat" name="lat"><input type="hidden" id="lng" name="lng">
+          <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> Generar ticket y enviar</button>
         </form>
       </div>
     </div>
@@ -1632,6 +1738,32 @@ footer{
   </div>
 </div>
  
+<!-- ════════ TICKET VIP 3D ════════ -->
+<div class="tk-overlay" id="tkOverlay">
+  <canvas class="tk-confetti" id="tkConfetti"></canvas>
+  <div class="ticket" id="tkCard">
+    <button class="tk-close" id="tkClose"><i class="fas fa-times"></i></button>
+    <div class="tk-icon"><i class="fas fa-bolt"></i></div>
+    <h2 class="tk-title">¡Cotización Lista!</h2>
+    <p class="tk-sub">Tu ticket digital VIP de Transportes LR se generó correctamente.</p>
+    <div class="tk-body">
+      <div class="tk-row"><span class="tk-k">👤 Cliente</span><span class="tk-v" id="tkCliente">—</span></div>
+      <div class="tk-row"><span class="tk-k">📍 Destino</span><span class="tk-v" id="tkDestino">—</span></div>
+      <div class="tk-row"><span class="tk-k">🚐 Unidad</span><span class="tk-v" id="tkUnidad">—</span></div>
+      <div class="tk-row"><span class="tk-k">📆 Fecha</span><span class="tk-v" id="tkFecha">—</span></div>
+      <div class="tk-row"><span class="tk-k">👥 Pasajeros</span><span class="tk-v" id="tkPax">—</span></div>
+      <div class="tk-folio">
+        <span>Folio</span><strong id="tkFolio">LR-000000</strong>
+      </div>
+    </div>
+    <a href="#" target="_blank" class="tk-wa" id="tkWa">
+      <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.966 0c3.178.001 6.165 1.24 8.413 3.494 2.25 2.253 3.487 5.244 3.484 8.423-.003 6.615-5.34 11.963-11.909 11.963-2.005-.001-3.975-.51-5.728-1.485L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.623-1.023-5.09-2.885-6.956C16.53 1.984 14.062.96 11.445.96c-5.438 0-9.866 4.372-9.87 9.802 0 1.698.459 3.35 1.328 4.866l-.993 3.63 3.733-.964z"/></svg>
+      <span>ENVIAR TICKET A WHATSAPP</span>
+    </a>
+    <p class="tk-note">Al dar clic se abrirá WhatsApp con el mensaje listo para enviar.</p>
+  </div>
+</div>
+ 
 <script>
 gsap.registerPlugin(ScrollTrigger);
  
@@ -1894,6 +2026,13 @@ function fechaBonita(f){
 }
  
 /* Envío de solicitud por WhatsApp — formato premium */
+function fechaTicket(f){
+  if(!f) return 'Por confirmar';
+  const d=new Date(f+'T00:00:00'); if(isNaN(d)) return f;
+  const dias=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const mes=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  return dias[d.getDay()]+', '+String(d.getDate()).padStart(2,'0')+'/'+mes[d.getMonth()];
+}
 document.getElementById('fCot').addEventListener('submit',function(e){
   e.preventDefault();
   const n   = document.getElementById('fnombre').value.trim();
@@ -1903,57 +2042,145 @@ document.getElementById('fCot').addEventListener('submit',function(e){
   const u   = document.getElementById('funidad').value;
   const f   = document.getElementById('ffecha').value;
   const h   = document.getElementById('fhora').value;
-  const fr  = document.getElementById('fregreso').value;
-  const hr  = document.getElementById('fhoraregreso').value;
   const px  = document.getElementById('fpax').value;
   const ds  = document.getElementById('fdias').value;
- 
-  /* Destino: si es "otro", usa el texto escrito */
+
   let destinoFinal = d;
-  if(d === 'Otro destino'){
-    destinoFinal = otro ? ('Otro destino → ' + otro) : 'Otro destino (por definir)';
-  }
- 
-  const fechaSal = fechaBonita(f);
-  const fechaReg = fechaBonita(fr);
- 
-  const L = [];
-  L.push('╔══════════════════════╗');
-  L.push('     ✦ *TRANSPORTES LR* ✦');
-  L.push('   _Traslados de clase ejecutiva_');
-  L.push('╚══════════════════════╝');
-  L.push('');
-  L.push('¡Hola! 👋 Me gustaría reservar un traslado con ustedes. Estos son mis datos:');
-  L.push('');
-  L.push('👤 *CLIENTE*');
-  L.push('     ' + (n || '—'));
-  L.push('');
-  L.push('🗺️ *RUTA DEL VIAJE*');
-  L.push('     📍 Salida:  ' + (sal || '—'));
-  L.push('     🎯 Destino: ' + destinoFinal);
-  L.push('');
-  L.push('🚐 *UNIDAD SOLICITADA*');
-  L.push('     ' + (u || '—') + '  ·  👥 ' + (px || '—') + ' pax');
-  L.push('');
-  L.push('🗓️ *FECHAS Y HORARIOS*');
-  L.push('     ▸ Salida:  ' + (fechaSal || '—') + (h ? ('  —  ' + h + ' hrs') : ''));
-  if(fr){
-    L.push('     ▸ Regreso: ' + fechaReg + (hr ? ('  —  ' + hr + ' hrs') : ''));
-  }
-  L.push('     ▸ Duración: ' + (ds || '—') + ' día(s)');
+  if(d === 'Otro destino') destinoFinal = otro ? ('Otro: ' + otro) : 'Otro destino (por definir)';
+
+  const fechaFmt = fechaTicket(f);
+  const idSis = String(Math.floor(1000 + Math.random()*9000));
+
+  /* ── Mensaje formato TICKET VIP ── */
+  const M = [];
+  M.push('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓');
+  M.push('   ⚡ 𝗟𝗥 𝗧𝗥𝗔𝗡𝗦𝗣𝗢𝗥𝗧𝗘𝗦 𝗣𝗥𝗘𝗠𝗜𝗨𝗠 ⚡');
+  M.push('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛');
+  M.push(' 🎫 𝗧𝗜𝗖𝗞𝗘𝗧 𝗗𝗘 𝗖𝗢𝗧𝗜𝗭𝗔𝗖𝗜𝗢́𝗡 𝗩𝗜𝗣 🎫');
+  M.push('');
+  M.push('👤 𝗧𝗜𝗧𝗨𝗟𝗔𝗥 𝗗𝗘 𝗟𝗔 𝗥𝗘𝗦𝗘𝗥𝗩𝗔');
+  M.push('▸ ' + n.toUpperCase());
+  M.push('╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌');
+  M.push('');
+  M.push('🗺️ 𝗜𝗧𝗜𝗡𝗘𝗥𝗔𝗥𝗜𝗢 𝗗𝗘 𝗥𝗨𝗧𝗔');
+  M.push('🟢 𝗢𝗥𝗜𝗚𝗘𝗡');
+  M.push(' └ ' + sal);
+  M.push('🔴 𝗗𝗘𝗦𝗧𝗜𝗡𝗢');
+  M.push(' └ ' + destinoFinal);
+  M.push('╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌');
+  M.push('');
+  M.push('⚙️ 𝗗𝗘𝗧𝗔𝗟𝗟𝗘𝗦 𝗢𝗣𝗘𝗥𝗔𝗧𝗜𝗩𝗢𝗦');
+  M.push('╭──────────────────────────────╮');
+  M.push(' │ 🚐 𝗨𝗡𝗜𝗗𝗔𝗗 : ' + u);
+  M.push(' │ 👥 𝗣𝗟𝗔𝗭𝗔𝗦 : ' + px + ' Pasajeros');
+  M.push(' │ 📅 𝗙𝗘𝗖𝗛𝗔  : ' + fechaFmt);
+  M.push(' │ ⏰ 𝗛𝗢𝗥𝗔   : ' + h + ' hrs');
+  M.push(' │ ⏳ 𝗧𝗜𝗘𝗠𝗣𝗢 : ' + ds + ' Día(s)');
+  M.push('╰──────────────────────────────╯');
+  M.push('╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌');
+  M.push('');
   if(gpsData){
-    L.push('');
-    L.push('📌 *UBICACIÓN DE RECOLECCIÓN (GPS)*');
-    L.push('     ' + gpsData.link);
+    M.push('📍 𝗨𝗕𝗜𝗖𝗔𝗖𝗜𝗢́𝗡 𝗚𝗣𝗦 𝗘𝗫𝗔𝗖𝗧𝗔');
+    M.push('🔗 ' + gpsData.link);
+    M.push('');
   }
-  L.push('');
-  L.push('━━━━━━━━━━━━━━━━━');
-  L.push('_Quedo al pendiente para confirmar disponibilidad y tarifa._');
-  L.push('¡Muchas gracias! 🙌✨');
- 
-  const msg = L.join('\n');
-  window.open(`https://wa.me/523343194831?text=${encodeURIComponent(msg)}`,'_blank');
+  M.push('██████████████████████████████');
+  M.push('║▌│█║▌│ █║▌│█│║▌║│█║▌│ █║▌│█');
+  M.push(' 𝖨𝖣 𝖣𝖤 𝖲𝖨𝖲𝖳𝖤𝖬𝖠: 𝖫𝖱-' + idSis);
+  M.push(' 🟢 𝗦𝗧𝗔𝗧𝗨𝗦: 𝗣𝗘𝗡𝗗𝗜𝗘𝗡𝗧𝗘 𝗗𝗘 𝗧𝗔𝗥𝗜𝗙𝗔');
+
+  const msg = M.join('\n');
+  const waLink = 'https://api.whatsapp.com/send?phone=523343194831&text=' + encodeURIComponent(msg);
+  showTicket({ cliente:n, destino:destinoFinal, unidad:u, fecha:fechaFmt, pax:px, folio:idSis }, waLink);
 });
+ 
+/* ════════════════════════════════════════
+   TICKET VIP 3D — control
+════════════════════════════════════════ */
+function showTicket(d, waLink){
+  const ov = document.getElementById('tkOverlay');
+  if(!ov){ window.open(waLink,'_blank'); return; }
+  document.getElementById('tkCliente').textContent = d.cliente || '—';
+  document.getElementById('tkDestino').textContent = d.destino || '—';
+  document.getElementById('tkUnidad').textContent  = d.unidad  || '—';
+  document.getElementById('tkFecha').textContent   = d.fecha   || '—';
+  document.getElementById('tkPax').textContent     = (d.pax||'—') + ' pax';
+  const folio = d.folio ? ('LR-' + d.folio) : ('LR-' + Date.now().toString().slice(-6));
+  document.getElementById('tkFolio').textContent = folio;
+  document.getElementById('tkWa').setAttribute('href', waLink);
+  ov.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  fireConfetti();
+}
+function closeTicket(){
+  const ov = document.getElementById('tkOverlay');
+  if(!ov) return;
+  ov.classList.remove('active');
+  document.body.style.overflow = '';
+}
+(function(){
+  const ov = document.getElementById('tkOverlay');
+  const card = document.getElementById('tkCard');
+  const closeBtn = document.getElementById('tkClose');
+  if(!ov) return;
+  closeBtn.addEventListener('click', closeTicket);
+  ov.addEventListener('click', e=>{ if(e.target===ov) closeTicket(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeTicket(); });
+  /* cierra el ticket tras enviar a WhatsApp */
+  document.getElementById('tkWa').addEventListener('click', ()=> setTimeout(closeTicket, 400));
+  /* inclinación 3D con el mouse */
+  if(!('ontouchstart' in window)){
+    card.addEventListener('pointermove', e=>{
+      const r=card.getBoundingClientRect();
+      const rx=((e.clientY-r.top)/r.height-0.5)*-12;
+      const ry=((e.clientX-r.left)/r.width-0.5)*12;
+      card.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+    card.addEventListener('pointerleave', ()=>{ card.style.transform=''; });
+  }
+})();
+/* Confeti ligero (dorado + verde) */
+function fireConfetti(){
+  const cv = document.getElementById('tkConfetti');
+  if(!cv) return;
+  const ctx = cv.getContext('2d');
+  const ov = document.getElementById('tkOverlay');
+  cv.width = ov.clientWidth; cv.height = ov.clientHeight;
+  const colors=['#C9922B','#E8B455','#F5CC7A','#00C4AA','#ffffff'];
+  const N=110;
+  const parts=Array.from({length:N},()=>({
+    x:cv.width/2+(Math.random()-0.5)*120,
+    y:cv.height/2-40,
+    vx:(Math.random()-0.5)*9,
+    vy:Math.random()*-11-3,
+    g:0.28+Math.random()*0.12,
+    s:Math.random()*6+3,
+    rot:Math.random()*6.28,
+    vr:(Math.random()-0.5)*0.4,
+    c:colors[(Math.random()*colors.length)|0],
+    life:0,max:80+Math.random()*40
+  }));
+  let raf;
+  function tick(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    let alive=false;
+    parts.forEach(p=>{
+      if(p.life>p.max) return;
+      alive=true;
+      p.life++; p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr;
+      const a=p.life>p.max*0.7?1-(p.life-p.max*0.7)/(p.max*0.3):1;
+      ctx.save();
+      ctx.globalAlpha=Math.max(0,a);
+      ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.fillStyle=p.c;
+      ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);
+      ctx.restore();
+    });
+    if(alive) raf=requestAnimationFrame(tick);
+    else ctx.clearRect(0,0,cv.width,cv.height);
+  }
+  cancelAnimationFrame(raf); tick();
+}
  
 /* ════════════════════════════════════════
    HERO · MAPA 3D MÉXICO / JALISCO (Three.js)
@@ -1969,10 +2196,10 @@ function initGlobe(){
     const tc=document.createElement('canvas');
     if(!(tc.getContext('webgl')||tc.getContext('experimental-webgl'))) return fail();
   }catch(e){ return fail(); }
- 
+
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let W = wrap.clientWidth || 420, H = wrap.clientHeight || 460;
- 
+
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, W/H, 0.1, 100);
   camera.position.set(0, 0, 3.6);
@@ -1980,16 +2207,16 @@ function initGlobe(){
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
   renderer.setSize(W,H);
   wrap.appendChild(renderer.domElement);
- 
+
   scene.add(new THREE.AmbientLight(0x8899bb, 1.25));
   const dir = new THREE.DirectionalLight(0xffffff, 1.1); dir.position.set(2,3,4); scene.add(dir);
   const dir2 = new THREE.DirectionalLight(0xE8B455, 0.5); dir2.position.set(-3,-1,2); scene.add(dir2);
- 
+
   const root = new THREE.Group(); scene.add(root);
   const spin = new THREE.Group(); root.add(spin);
   const tilt = new THREE.Group(); spin.add(tilt);
   tilt.rotation.x = -0.95;
- 
+
   /* ── Coordenadas (lng,lat) ── */
   const mainland = [
     [-114.72,32.62],[-112.5,31.9],[-111.07,31.33],[-108.2,31.33],[-106.45,31.77],[-104.5,29.7],[-102.3,29.88],[-101.4,29.77],[-100.0,28.7],[-99.5,27.5],[-97.86,25.84],
@@ -2010,7 +2237,7 @@ function initGlobe(){
     {id:'sanjuan',     name:'San Juan de los Lagos', lng:-102.33, lat:21.24},
     {id:'guayabitos',  name:'Rincón de Guayabitos',  lng:-105.26, lat:21.02}
   ];
- 
+
   /* ── Proyección equirectangular + normalizado ── */
   const COSLAT = Math.cos(23*Math.PI/180);
   function pr(lng,lat){ return [ (lng+103.35)*COSLAT, (lat-20.5) ]; }
@@ -2021,7 +2248,7 @@ function initGlobe(){
   const cx=(minX+maxX)/2, cy=(minY+maxY)/2;
   const k = 2.25 / Math.max(maxX-minX, maxY-minY);
   function nrm(lng,lat){ const p=pr(lng,lat); return [ (p[0]-cx)*k, (p[1]-cy)*k ]; }
- 
+
   function shapeFrom(coords){
     const s=new THREE.Shape();
     const a=nrm(coords[0][0],coords[0][1]); s.moveTo(a[0],a[1]);
@@ -2033,21 +2260,21 @@ function initGlobe(){
     const g=new THREE.BufferGeometry().setFromPoints(pts);
     return new THREE.Line(g, new THREE.LineBasicMaterial({color, transparent:true, opacity:op}));
   }
- 
+
   const DEPTH=0.07;
   const landMat = new THREE.MeshStandardMaterial({color:0x123c4f, metalness:0.15, roughness:0.85, emissive:0x06222e, emissiveIntensity:0.5});
   const mex = new THREE.Mesh(new THREE.ExtrudeGeometry(shapeFrom(mainland), {depth:DEPTH, bevelEnabled:false}), landMat);
   const baj = new THREE.Mesh(new THREE.ExtrudeGeometry(shapeFrom(baja),     {depth:DEPTH, bevelEnabled:false}), landMat.clone());
   tilt.add(mex); tilt.add(baj);
- 
+
   const jalMat = new THREE.MeshStandardMaterial({color:0xC9922B, metalness:0.3, roughness:0.55, emissive:0x6b4910, emissiveIntensity:0.6});
   const jal = new THREE.Mesh(new THREE.ExtrudeGeometry(shapeFrom(jalisco), {depth:DEPTH+0.03, bevelEnabled:false}), jalMat);
   jal.position.z = 0.001; tilt.add(jal);
- 
+
   tilt.add(outline(mainland, DEPTH+0.002, 0x6fd0c4, 0.35));
   tilt.add(outline(baja,     DEPTH+0.002, 0x6fd0c4, 0.35));
   tilt.add(outline(jalisco,  DEPTH+0.045, 0xF5CC7A, 0.95));
- 
+
   /* ── Pines clicables ── */
   const pickables=[];
   const stemMat = new THREE.MeshBasicMaterial({color:0xE8B455, transparent:true, opacity:0.55});
@@ -2066,19 +2293,19 @@ function initGlobe(){
       new THREE.MeshBasicMaterial({color:col, transparent:true, opacity:0.18}));
     halo.position.copy(sph.position); sph.userData.halo=halo; tilt.add(halo);
   });
- 
+
   /* ── Partículas flotantes ── */
   const pcount=90, ppos=[];
   for(let i=0;i<pcount;i++) ppos.push((Math.random()-0.5)*4,(Math.random()-0.5)*3,(Math.random()-0.5)*2+0.5);
   const pg=new THREE.BufferGeometry(); pg.setAttribute('position',new THREE.Float32BufferAttribute(ppos,3));
   const parts=new THREE.Points(pg,new THREE.PointsMaterial({color:0xC9922B,size:0.02,transparent:true,opacity:0.5}));
   root.add(parts);
- 
+
   /* ── Interacción ── */
   const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(-2,-2);
   let drag=false, lastX=0, dragYaw=0, tiltX=0, tiltY=0, hovered=null;
   let hasPointer=false;
- 
+
   wrap.addEventListener('pointerdown',e=>{drag=true; lastX=e.clientX;});
   window.addEventListener('pointerup',()=>{drag=false;});
   wrap.addEventListener('pointerleave',()=>{ mouse.set(-2,-2); hasPointer=false; });
@@ -2092,7 +2319,7 @@ function initGlobe(){
     if(drag){ dragYaw += (e.clientX-lastX)*0.006; lastX=e.clientX; }
   });
   wrap.addEventListener('click',()=>{ if(hovered && hovered.userData.id) openM(hovered.userData.id); });
- 
+
   function setTip(obj){
     if(!tip) return;
     if(!obj){ tip.classList.remove('on'); return; }
@@ -2103,7 +2330,7 @@ function initGlobe(){
     tip.innerHTML='<i class="fas fa-location-dot"></i>'+obj.userData.name;
     tip.classList.add('on');
   }
- 
+
   const clock=new THREE.Clock();
   function animate(){
     requestAnimationFrame(animate);
@@ -2112,14 +2339,14 @@ function initGlobe(){
     root.rotation.x += (tiltX - root.rotation.x)*0.05;
     root.rotation.y += (tiltY - root.rotation.y)*0.05;
     parts.rotation.y = t*0.04;
- 
+
     pickables.forEach(p=>{
       const s=p.userData.base*(1+Math.sin(t*2.5+p.userData.pulse)*0.12);
       p.scale.setScalar(p===hovered?1.5:1);
       if(p.userData.halo){ const hs=(p===hovered?2.2:1.6)+Math.sin(t*2.5+p.userData.pulse)*0.25;
         p.userData.halo.scale.setScalar(hs); }
     });
- 
+
     if(hasPointer && !drag){
       ray.setFromCamera(mouse,camera);
       const hits=ray.intersectObjects(pickables,false);
@@ -2127,18 +2354,18 @@ function initGlobe(){
       if(obj!==hovered){ hovered=obj; setTip(obj); wrap.style.cursor=obj?'pointer':'grab'; }
       else if(obj) setTip(obj);
     } else if(hovered){ hovered=null; setTip(null); wrap.style.cursor='grab'; }
- 
+
     renderer.render(scene,camera);
   }
   animate();
- 
+
   window.addEventListener('resize',()=>{
     W=wrap.clientWidth||W; H=wrap.clientHeight||H;
     camera.aspect=W/H; camera.updateProjectionMatrix(); renderer.setSize(W,H);
   });
 }
 window.addEventListener('load', initGlobe);
- 
+
 /* ════════════════════════════════════════
    INTERACCIONES DE PÁGINA
 ════════════════════════════════════════ */
@@ -2153,7 +2380,7 @@ window.addEventListener('load', initGlobe);
   window.addEventListener('scroll',upd,{passive:true});
   window.addEventListener('resize',upd); upd();
 })();
- 
+
 /* Inclinación 3D en tarjetas (flota + destinos) */
 (function(){
   if('ontouchstart' in window) return;
@@ -2167,7 +2394,7 @@ window.addEventListener('load', initGlobe);
     card.addEventListener('pointerleave',()=>{ card.style.transform=''; });
   });
 })();
- 
+
 /* Botones magnéticos */
 (function(){
   if('ontouchstart' in window) return;
