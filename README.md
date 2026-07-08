@@ -1,1 +1,0 @@
-# Turismos-LR.COM
